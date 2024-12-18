@@ -10,13 +10,15 @@ namespace ChuyenDeASPNET.Controllers
     public class ProductController : Controller
     {
         // GET: Product
+        ASPNETEntities objASPNETEntities = new ASPNETEntities();
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult ProductDetail()
+        public ActionResult ProductDetail(int id)
         {
-            return View();
+            var objProduct = objASPNETEntities.Products.Where(n => n.ProductID == id).FirstOrDefault();
+            return View(objProduct);
         }
     }
 }

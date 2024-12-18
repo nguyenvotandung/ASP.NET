@@ -13,10 +13,10 @@ namespace ChuyenDeASPNET.Context
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ASPNETEntities1 : DbContext
+    public partial class ASPNETEntities : DbContext
     {
-        public ASPNETEntities1()
-            : base("name=ASPNETEntities1")
+        public ASPNETEntities()
+            : base("name=ASPNETEntities")
         {
         }
     

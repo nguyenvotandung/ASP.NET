@@ -27,8 +27,7 @@ namespace ChuyenDeASPNET.Context
         public Nullable<System.DateTime> UpdateAt { get; set; }
         public string UpdateBy { get; set; }
         public Nullable<bool> Status { get; set; }
-    
-        public virtual Brand Brand { get; set; }
-        public virtual Category Category { get; set; }
+        public Nullable<byte> ShockSale { get; set; }
+        public Nullable<bool> IsRecommended { get; set; }
     }
 }
