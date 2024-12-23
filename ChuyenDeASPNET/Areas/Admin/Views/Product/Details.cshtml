@@ -1,0 +1,90 @@
+﻿@model ChuyenDeASPNET.Context.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-center">Product Details</h2>
+
+<div class="container mt-4">
+    <h4>Product Information</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.ProductName)</dt>
+                <dd>@Html.DisplayFor(model => model.ProductName)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.ShortDescription)</dt>
+                <dd>@Html.DisplayFor(model => model.ShortDescription)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.FullDescription)</dt>
+                <dd>@Html.DisplayFor(model => model.FullDescription)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Price)</dt>
+                <dd>@Html.DisplayFor(model => model.Price)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.CategoryID)</dt>
+                <dd>@Html.DisplayFor(model => model.CategoryID)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.BrandID)</dt>
+                <dd>@Html.DisplayFor(model => model.BrandID)</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Product Image</label>
+                <div class="text-center">
+                    @if (!string.IsNullOrEmpty(Model.ProductImage))
+                    {
+                        <img src="@Url.Content("~/Content/images/items/" + Model.ProductImage)" alt="Product Image" class="img-fluid" />
+                    }
+                    else
+                    {
+                        <p>No image available</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.CreateAt)</dt>
+                <dd>@Html.DisplayFor(model => model.CreateAt)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.CreateBy)</dt>
+                <dd>@Html.DisplayFor(model => model.CreateBy)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.UpdateAt)</dt>
+                <dd>@Html.DisplayFor(model => model.UpdateAt)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.UpdateBy)</dt>
+                <dd>@Html.DisplayFor(model => model.UpdateBy)</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.Status)</dt>
+                <dd>@Html.DisplayFor(model => model.Status)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.ShockSale)</dt>
+                <dd>@Html.DisplayFor(model => model.ShockSale)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.IsRecommended)</dt>
+                <dd>@Html.DisplayFor(model => model.IsRecommended)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="form-group mt-4">
+        <div class="text-center">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-primary btn-lg mx-2" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-lg mx-2" })
+        </div>
+    </div>
+</div>
