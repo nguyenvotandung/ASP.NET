@@ -9,6 +9,10 @@
         <EntityTypeShape EntityType="ASPNETModel.Category" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ASPNETModel.Product" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ASPNETModel.User" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETModel.Order" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ASPNETModel.OrderDetail" Width="1.5" PointX="7" PointY="1.75" />
+        <AssociationConnector Association="ASPNETModel.FK_OrderDetail_Order" />
+        <AssociationConnector Association="ASPNETModel.FK_OrderDetail_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -45,6 +45,7 @@
     <Property Name="Status" Type="Boolean" />
     <Property Name="ShockSale" Type="Byte" />
     <Property Name="IsRecommended" Type="Boolean" />
+    <NavigationProperty Name="OrderDetails" Relationship="ASPNETModel.FK_OrderDetail_Product" FromRole="Product" ToRole="OrderDetail" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -61,5 +62,61 @@
     <EntitySet Name="Categories" EntityType="Self.Category" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Orders" EntityType="ASPNETModel.Order" />
+    <EntitySet Name="OrderDetails" EntityType="ASPNETModel.OrderDetail" />
+    <AssociationSet Name="FK_OrderDetail_Order" Association="ASPNETModel.FK_OrderDetail_Order">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_Product" Association="ASPNETModel.FK_OrderDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOnUtc" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="OrderDetails" Relationship="ASPNETModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="ASPNETModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="ASPNETModel.FK_OrderDetail_Product" FromRole="OrderDetail" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_OrderDetail_Order">
+    <End Type="ASPNETModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="ASPNETModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_Product">
+    <End Type="ASPNETModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="ASPNETModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

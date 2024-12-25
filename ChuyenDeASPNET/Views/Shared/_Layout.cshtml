@@ -61,14 +61,25 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="widgets-wrap float-md-right">
                             <div class="widget-header mr-3">
-                                <a href= "@Url.Action("ProfileMain", "Profile")" class="widget-view">
-                                    <div class="icon-area">
-                                        <i class="fa fa-user"></i>
-                                        <span class="notify">3</span>
-                                    </div>
-                                    <small class="text"> My profile </small>
-                                </a>
+                                @if (Session["idUser"] != null)
+                                {
+                                    <!-- Hiển thị các liên kết cho người dùng đã đăng nhập -->
+                                    <ul style="list-style-type: none; padding-left: 0;">
+                                        <li><a href="~/Home/Logout" class="btn btn-warning">Logout</a></li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <!-- Hiển thị các liên kết cho người dùng chưa đăng nhập -->
+                                    <ul style="list-style-type: none; padding-left: 0;">
+                                        <li><a href="~/Home/Register">Đăng ký</a></li>
+                                        <li><a href="~/Home/Login">Đăng nhập</a></li>
+                                    </ul>
+                                }
                             </div>
+
+
+
                             <div class="widget-header mr-3">
                                 <a href="#" class="widget-view">
                                     <div class="icon-area">
@@ -90,6 +101,7 @@
                                 <a href="@Url.Action("Cart", "Shopping")" class="widget-view">
                                     <div class="icon-area">
                                         <i class="fa fa-shopping-cart"></i>
+                                        <span class="notify" id="CartCount">@Session["count"]</span>
                                     </div>
                                     <small class="text"> Cart </small>
                                 </a>

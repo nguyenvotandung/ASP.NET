@@ -144,3 +144,19 @@ CREATE TABLE Users (
     Password  varchar(50)
 );
 
+CREATE TABLE [Order] (
+    Id INT PRIMARY KEY IDENTITY(1,1), -- Tạo cột Id là khóa chính và tự động tăng
+    Name NVARCHAR(255) NOT NULL,       -- Cột Name kiểu chuỗi (nvarchar), không cho phép null
+    UserId INT NOT NULL,               -- Cột UserId kiểu int, không cho phép null
+    Status INT NOT NULL,               -- Cột Status kiểu int, không cho phép null
+    CreatedOnUtc DATETIME NOT NULL     -- Cột CreatedOnUtc kiểu datetime, không cho phép null
+);
+
+CREATE TABLE OrderDetail (
+    Id INT PRIMARY KEY IDENTITY(1,1), -- Tạo cột Id là khóa chính và tự động tăng
+    OrderId INT NOT NULL,              -- Cột OrderId kiểu int, không cho phép null
+    ProductId INT NOT NULL,            -- Cột ProductId kiểu int, không cho phép null
+    Quantity INT NOT NULL,             -- Cột Quantity kiểu int, không cho phép null
+    CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (OrderId) REFERENCES [Order](Id), -- Ràng buộc khóa ngoại tới bảng Order
+    CONSTRAINT FK_OrderDetail_Product FOREIGN KEY (ProductId) REFERENCES Product(ProductId) -- Ràng buộc khóa ngoại tới bảng Product (giả sử bạn có bảng Product)
+);
