@@ -1,9 +1,11 @@
 ﻿using ChuyenDeASPNET.Context;
+using ChuyenDeASPNET.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ChuyenDeASPNET.Controllers
 {
@@ -23,11 +25,32 @@ namespace ChuyenDeASPNET.Controllers
 
             return View(lstCategory);
         }
-        public ActionResult ProductByCategory(int id)
-
+        public ActionResult ProductByCategory(int id, int page = 1)  
         {
-            var listProduct = objASPNETEntities.Products.Where(n => n.CategoryID == id).ToList();
-            return View(listProduct);
+            int pageSize = 3; 
+
+            
+            var listProduct = objASPNETEntities.Products
+                                .Where(n => n.CategoryID == id)
+                                .OrderBy(p => p.ProductID)  
+                                .Skip((page - 1) * pageSize) 
+                                .Take(pageSize) 
+                                .ToList();
+
+            // Tổng số sản phẩm
+            var totalItems = objASPNETEntities.Products.Count(n => n.CategoryID == id);
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            // Tạo ViewModel chứa thông tin phân trang
+            var model = new ProductListViewModel
+            {
+                Products = listProduct,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                CategoryID = id
+            };
+
+            return View(model);
         }
     }
 }

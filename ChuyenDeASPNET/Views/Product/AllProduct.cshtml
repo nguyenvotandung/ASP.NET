@@ -1,0 +1,206 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ChuyenDeASPNET.Context.Product>
+@{
+    ViewBag.Title = "Tất cả sản phẩm";
+    var totalPrice = Model.Sum(p => Convert.ToDecimal(p.Price));
+    var formattedTotalPrice = totalPrice.ToString("C0", System.Globalization.CultureInfo.CreateSpecificCulture("vi-VN"));
+}
+
+<section class="section-content padding-y">
+    <div class="container">
+
+        <!-- ============================  LỌC PHÍA TRÊN  ================================= -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2"> Bạn đang ở đây: </div> <!-- col.// -->
+                    <nav class="col-md-8">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Danh sách sản phẩm</li>
+                        </ol>
+                    </nav> <!-- col.// -->
+                </div> <!-- row.// -->
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">Lọc theo</div> <!-- col.// -->
+                    <div class="col-md-10">
+                        <ul class="list-inline">
+                            <li class="list-inline-item mr-3 dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">   Loại nhà cung cấp </a>
+                                <div class="dropdown-menu p-3" style="max-width:400px;">
+                                    <label class="form-check">
+                                        <input type="radio" name="myfilter" class="form-check-input"> Nhà cung cấp tốt
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="radio" name="myfilter" class="form-check-input"> Nhà cung cấp tốt nhất
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="radio" name="myfilter" class="form-check-input"> Nhà cung cấp mới
+                                    </label>
+                                </div> <!-- dropdown-menu.// -->
+                            </li>
+                            <li class="list-inline-item mr-3 dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">  Quốc gia </a>
+                                <div class="dropdown-menu p-3">
+                                    <label class="form-check"> 	 <input type="checkbox" class="form-check-input"> Trung Quốc    </label>
+                                    <label class="form-check">   	 <input type="checkbox" class="form-check-input"> Nhật Bản      </label>
+                                    <label class="form-check">    <input type="checkbox" class="form-check-input"> Uzbekistan  </label>
+                                    <label class="form-check">  <input type="checkbox" class="form-check-input"> Nga     </label>
+                                </div> <!-- dropdown-menu.// -->
+                            </li>
+                            <li class="list-inline-item mr-3 dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tính năng</a>
+                                <div class="dropdown-menu">
+                                    <a href="" class="dropdown-item">Kháng khuẩn</a>
+                                    <a href="" class="dropdown-item">Có nút bấm</a>
+                                    <a href="" class="dropdown-item">An toàn hơn</a>
+                                </div>
+                            </li>
+                            <li class="list-inline-item mr-3"><a href="#">Màu sắc</a></li>
+                            <li class="list-inline-item mr-3"><a href="#">Kích cỡ</a></li>
+                            <li class="list-inline-item mr-3">
+                                <div class="form-inline">
+                                    <label class="mr-2">Giá</label>
+                                    <input class="form-control form-control-sm" placeholder="Tối thiểu" type="number">
+                                    <span class="px-2"> - </span>
+                                    <input class="form-control form-control-sm" placeholder="Tối đa" type="number">
+                                    <button type="submit" class="btn btn-sm btn-light ml-2">Ok</button>
+                                </div>
+                            </li>
+                            <li class="list-inline-item mr-3">
+                                <label class="custom-control mt-1 custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <div class="custom-control-label">
+                                        Sẵn sàng giao hàng
+                                    </div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div> <!-- col.// -->
+                </div> <!-- row.// -->
+            </div> <!-- card-body .// -->
+        </div> <!-- card.// -->
+        <!-- ============================ LỌC PHÍA TRÊN KẾT THÚC ================================= -->
+
+        <header class="mb-3">
+            <div class="form-inline">
+                <strong class="mr-md-auto">Tìm thấy @Model.Count sản phẩm</strong>
+                <select class="mr-2 form-control">
+                    <option>Sản phẩm mới nhất</option>
+                    <option>Sản phẩm đang thịnh hành</option>
+                    <option>Sản phẩm phổ biến nhất</option>
+                    <option>Sản phẩm rẻ nhất</option>
+                </select>
+                <div class="btn-group">
+                    <a href="page-listing-grid.html" class="btn btn-light active" data-toggle="tooltip" title="Xem theo danh sách">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <a href="page-listing-large.html" class="btn btn-light" data-toggle="tooltip" title="Xem theo lưới">
+                        <i class="fa fa-th"></i>
+                    </a>
+                </div>
+            </div>
+        </header><!-- sect-heading -->
+
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-3">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap">
+                            <span class="badge badge-danger"> MỚI </span>
+                            <img src="~/Content/images/items/@product.ProductImage">
+                        </div> <!-- img-wrap.// -->
+                        <figcaption class="info-wrap">
+                            <a href="#" class="title mb-2">@product.ProductName</a>
+
+                            <p class="mb-2"> @Convert.ToDecimal(product.Price).ToString("C0", System.Globalization.CultureInfo.CreateSpecificCulture("vi-VN"))</p>
+
+                            <p class="text-muted" style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; white-space: normal;">@product.ShortDescription</p>
+
+                            <hr>
+
+                            <p class="mb-3">
+                                <span class="tag"> <i class="fa fa-check"></i> Đã xác minh</span>
+                                <span class="tag"> 2 Năm </span>
+                                <span class="tag"> 23 đánh giá </span>
+                                <span class="tag"> Nhật Bản </span>
+                            </p>
+
+                            <label class="custom-control mb-3 custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <div class="custom-control-label">
+                                    Thêm vào so sánh
+                                </div>
+                            </label>
+
+                            <a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Liên hệ nhà cung cấp </a>
+
+                        </figcaption>
+                    </figure>
+                </div> <!-- col.// -->
+            }
+
+        </div> <!-- row end.// -->
+
+        <nav class="mb-4" aria-label="Điều hướng trang mẫu">
+            <ul class="pagination">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("AllProduct", new { page = Model.PageNumber - 1, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.CurrentSort })">
+                            Trang trước
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">Trang trước</span>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="page-item active">
+                            <span class="page-link">@i</span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("AllProduct", new { page = i, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.CurrentSort })">
+                                @i
+                            </a>
+                        </li>
+                    }
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("AllProduct", new { page = Model.PageNumber + 1, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.CurrentSort })">
+                            Trang sau
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">Trang sau</span>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <div class="box text-center">
+            <p>Bạn có tìm thấy những gì mình cần?</p>
+            <a href="index.html" class="btn btn-outline-primary">Quay lại trang trước</a>
+        </div>
+
+    </div> <!-- container .// -->
+</section>

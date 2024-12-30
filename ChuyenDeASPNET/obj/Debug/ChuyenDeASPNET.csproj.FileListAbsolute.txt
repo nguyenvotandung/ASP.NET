@@ -160,3 +160,7 @@ C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.xml
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.xml
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.xml
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.xml

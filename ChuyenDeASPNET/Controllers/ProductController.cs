@@ -1,4 +1,5 @@
 ﻿using ChuyenDeASPNET.Context;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,31 @@ namespace ChuyenDeASPNET.Controllers
         {
             var objProduct = objASPNETEntities.Products.Where(n => n.ProductID == id).FirstOrDefault();
             return View(objProduct);
+        }
+        public ActionResult AllProduct(string currentFilter, string SearchString, int? page)
+        {
+            var lstProduct = new List<Product>();
+            if (SearchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                lstProduct = objASPNETEntities.Products.Where(n => n.ProductName.Contains(SearchString)).ToList();
+            }
+            else
+            {
+                lstProduct = objASPNETEntities.Products.ToList();
+            }
+            ViewBag.CurentFIlter = SearchString;
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            lstProduct = lstProduct.OrderByDescending(n => n.ProductID).ToList();
+            return View(lstProduct.ToPagedList(pageNumber, pageSize));
         }
     }
 }

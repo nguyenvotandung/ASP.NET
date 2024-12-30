@@ -1,142 +1,141 @@
-﻿    @model IEnumerable<ChuyenDeASPNET.Models.CartModel>
+﻿@model IEnumerable<ChuyenDeASPNET.Models.CartModel>
 
-    @{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
-    <script type="text/javascript">
-        $(function () {
-            $("#removecart").click(function () {
-                var model = {};
-                //lấy id sản phẩm
-                model.Id = $("#productid").val();
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Remove", "Shopping")',
-                    data:  JSON.stringify(model) ,
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function () {
-                        $('#CartCount').text(@Session["count"] - 1);
-                        $("#product-" + model.Id).remove();
-                    },
-                    error: function () {
-                        alert("Lỗi trong khi thêm vào giỏ hàng!");
-                    }
-                });
-                return false;
+<script type="text/javascript">
+    $(function () {
+        $("#removecart").click(function () {
+            var model = {};
+            // Lấy ID sản phẩm
+            model.Id = $("#productid").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Remove", "Shopping")',
+                data: JSON.stringify(model),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    $('#CartCount').text(@Session["count"] - 1);
+                    $("#product-" + model.Id).remove();
+                },
+                error: function () {
+                    alert("Lỗi khi xóa sản phẩm khỏi giỏ hàng!");
+                }
             });
+            return false;
         });
-    </script>
+    });
+</script>
 
-    <section class="section-content padding-y">
-        <div class="container">
-            <div class="row">
-                <main class="col-md-9">
-                    <div class="card">
-
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col">Product</th>
-                                    <th scope="col" width="120">Quantity</th>
-                                    <th scope="col" width="120">Price</th>
-                                    <th scope="col" class="text-right" width="200"> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model != null)
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-9">
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col" width="120">Số lượng</th>
+                                <th scope="col" width="150">Giá</th>
+                                <th scope="col" class="text-right" width="200"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
                                 {
-                                    foreach (var item in Model)
-                                    {
-                                        <tr id="product-@item.Product.ProductID">
-                                            <td>
-                                                <figure class="itemside">
-                                                    <div class="aside"><img src="~/Content/images/items/@item.Product.ProductImage" class="img-sm"></div>
-                                                    <figcaption class="info">
-                                                        <a href="#" class="title text-dark">@item.Product.ProductImage</a>
-                                                    </figcaption>
-                                                </figure>
-                                            </td>
-                                            <td>
-                                                <input type="text" value="@item.Quantity" />
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">@item.Product.Price</var>
-                                                </div> <!-- price-wrap .// -->
-                                            </td>
-                                            <td class="text-right">
-                                                <input type="hidden" value="@item.Product.ProductID" id="productid" />
-                                                <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+                                    <tr id="product-@item.Product.ProductID">
+                                        <td>
+                                            <figure class="itemside">
+                                                <!-- Sử dụng thẻ <a> thay vì <div> để tạo liên kết -->
+                                                <a href="@Url.Action("ProductDetail", "Product", new { id = item.Product.ProductID })" class="aside">
+                                                    <img src="~/Content/images/items/@item.Product.ProductImage" class="img-sm">
+                                                </a>
+                                            </figure>
+                                        </td>
+                                        <td>
+                                            <input type="text" value="@item.Quantity" />
+                                        </td>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">@item.Product.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</var>
+                                            </div> <!-- price-wrap .// -->
+                                        </td>
 
-                                                <a href="" class="btn btn-light" id="removecart"> Remove</a>
-                                            </td>
-                                        </tr>
-                                    }
+                                        <td class="text-right">
+                                            <input type="hidden" value="@item.Product.ProductID" id="productid" />
+                                            <a data-original-title="Lưu vào danh sách yêu thích" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+
+                                            <a href="" class="btn btn-light" id="removecart"> Xóa</a>
+                                        </td>
+                                    </tr>
                                 }
-                                else
-                                {
-                                    <p>Không có sản phẩm trong giỏ hàng</p>
-                                }
+                            }
+                        </tbody>
+                    </table>
 
-
-                            </tbody>
-                        </table>
-
-                        <div class="card-body border-top">
-                            <a href="@Url.Action("Index", "Payment")" class="btn btn-primary float-md-right"> Thanh toán <i class="fa fa-chevron-right"></i> </a>
-                            <a href="@Url.Action("Index", "Home")" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <div class="alert alert-warning">
+                            <p class="text-center">Không có sản phẩm trong giỏ hàng</p>
                         </div>
-                    </div> <!-- card.// -->
+                    }
 
-                    <div class="alert alert-success mt-3">
-                        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+                    <div class="card-body border-top">
+                        <a href="@Url.Action("Index", "Payment")" class="btn btn-primary float-md-right"> Thanh toán <i class="fa fa-chevron-right"></i> </a>
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
                     </div>
+                </div> <!-- card.// -->
 
-                </main> <!-- col.// -->
-                <aside class="col-md-3">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label>Have coupon?</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="" placeholder="Coupon code">
-                                        <span class="input-group-append">
-                                            <button class="btn btn-primary">Apply</button>
-                                        </span>
-                                    </div>
+                <div class="alert alert-success mt-3">
+                    <p class="icontext"><i class="icon text-success fa fa-truck"></i> Giao hàng miễn phí trong 1-2 tuần</p>
+                </div>
+
+            </main> <!-- col.// -->
+            <aside class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Có mã giảm giá?</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="" placeholder="Mã giảm giá">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary">Áp dụng</button>
+                                    </span>
                                 </div>
-                            </form>
-                        </div> <!-- card-body.// -->
-                    </div>  <!-- card .// -->
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="dlist-align">
-                                <dt>Total price:</dt>
-                                <dd class="text-right">USD 568</dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt>Discount:</dt>
-                                <dd class="text-right">USD 658</dd>
-                            </dl>
-                            <dl class="dlist-align">
-                                <dt>Total:</dt>
-                                <dd class="text-right  h5"><strong>$1,650</strong></dd>
-                            </dl>
-                            <hr>
-                            <p class="text-center mb-3">
-                                <img src="images/misc/payments.png" height="26">
-                            </p>
+                            </div>
+                        </form>
+                    </div> <!-- card-body.// -->
+                </div>  <!-- card .// -->
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Tổng giá:</dt>
+                            <dd class="text-right">USD 568</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Giảm giá:</dt>
+                            <dd class="text-right">USD 658</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Tổng cộng:</dt>
+                            <dd class="text-right  h5"><strong>$1,650</strong></dd>
+                        </dl>
+                        <hr>
+                        <p class="text-center mb-3">
+                            <img src="~/Content/images/misc/payments.png" height="26">
+                        </p>
 
-                        </div> <!-- card-body.// -->
-                    </div>  <!-- card .// -->
-                </aside> <!-- col.// -->
-            </div>
-
-        </div> <!-- container .//  -->
-    </section>
+                    </div> <!-- card-body.// -->
+                </div>  <!-- card .// -->
+            </aside> <!-- col.// -->
+        </div>
+    </div> <!-- container .//  -->
+</section>

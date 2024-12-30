@@ -112,6 +112,20 @@ namespace ChuyenDeASPNET.Controllers
             Session.Clear();//remove session
             return RedirectToAction("Login");
         }
+        public ActionResult Search(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return View("SearchResults", new List<Product>()); // Không có kết quả
+            }
 
+            // Tìm kiếm sản phẩm theo tên hoặc mô tả
+            var products = objASPNETEntities.Products
+                .Where(p => p.ProductName.Contains(query) || p.ShortDescription.Contains(query))
+                .ToList();
+
+            // Trả về view với danh sách sản phẩm tìm được
+            return View("SearchResults", products);
+        }
     }
 }

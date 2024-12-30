@@ -22,6 +22,12 @@ namespace ChuyenDeASPNET.Controllers
             {
                 // lấy thông tin từ giỏ hàng trong session
                 var istCart = (List<CartModel>)Session["cart"];
+                if (istCart == null || !istCart.Any())
+                {
+                    // Giỏ hàng trống, bạn có thể thông báo hoặc làm gì đó ở đây
+                    TempData["ErrorMessage"] = "Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm vào giỏ hàng.";
+                    return RedirectToAction("Index", "Home"); // Hoặc chuyển hướng khác
+                }
 
                 // tạo dữ liệu cho Order
                 Order objOrder = new Order();
@@ -41,6 +47,14 @@ namespace ChuyenDeASPNET.Controllers
 
                 foreach (var item in istCart)
                 {
+                    var product = objASPNETEntities.Products.FirstOrDefault(p => p.ProductID == item.Product.ProductID);
+
+                    if (product == null)
+                    {
+                        // Nếu sản phẩm không tồn tại trong cơ sở dữ liệu, bạn có thể thông báo lỗi
+                        TempData["ErrorMessage"] = "Sản phẩm trong giỏ hàng không tồn tại. Vui lòng thử lại.";
+                        return RedirectToAction("Index", "Home");
+                    }
                     OrderDetail obj = new OrderDetail();
                     obj.Quantity = item.Quantity;
                     obj.OrderId = orderId;
@@ -50,6 +64,13 @@ namespace ChuyenDeASPNET.Controllers
 
                 objASPNETEntities.OrderDetails.AddRange(lstOrderDetail);
                 objASPNETEntities.SaveChanges();
+                ViewBag.OrderDetails = lstOrderDetail;
+                ViewBag.TotalAmount = lstOrderDetail.Sum(m => m.Quantity * m.Product.Price);
+
+
+                // Xóa giỏ hàng sau khi thanh toán thành công
+                Session["cart"] = null; 
+                Session["count"] = 0; 
             }
 
             return View();

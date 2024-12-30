@@ -1,37 +1,45 @@
-﻿
-@model ChuyenDeASPNET.Context.User
-
-
+﻿@model ChuyenDeASPNET.Context.User
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Đăng nhập";
 }
 
-<div class="row justify-content-md-center">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                Login
-            </div>
-            <div class="card-body">
-                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email)
-                        @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+<h2 class="text-center text-primary">Đăng nhập</h2>
 
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password)
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" name="submit" class="btn btn-primary" value="Login" />
-                    </div>
-                }
+<div class="card shadow-lg p-4 mb-4">
+    <h4 class="text-center text-secondary">Vui lòng nhập thông tin</h4>
+    <hr />
+
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            <div class="col-md-9">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-9 offset-md-3">
+                <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div>
+        </div>
+    }
 </div>
 
+<div class="text-center mt-3">
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-link" })
+</div>
