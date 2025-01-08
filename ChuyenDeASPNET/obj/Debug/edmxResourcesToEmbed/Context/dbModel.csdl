@@ -12,6 +12,7 @@
     <Property Name="UpdateAt" Type="DateTime" Precision="3" />
     <Property Name="UpdateBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsPopular" Type="Boolean" />
+    <Property Name="BrandImage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Category">
     <Key>

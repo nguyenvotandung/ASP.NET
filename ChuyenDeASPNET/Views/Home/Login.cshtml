@@ -1,45 +1,91 @@
 ﻿@model ChuyenDeASPNET.Context.User
 
+
 @{
+    Layout = null; // Bỏ qua _Layout.cshtml
     ViewBag.Title = "Đăng nhập";
 }
 
-<h2 class="text-center text-primary">Đăng nhập</h2>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+        }
 
-<div class="card shadow-lg p-4 mb-4">
-    <h4 class="text-center text-secondary">Vui lòng nhập thông tin</h4>
-    <hr />
+        .login-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+        .form-group label {
+            font-weight: bold;
+        }
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        .btn-primary {
+            background-color: #FF6A00; /* Đổi màu nút */
+            border: none;
+        }
 
-        <div class="form-group row">
-            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "col-md-3 col-form-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+        .text-primary {
+            color: #FF6A00; /* Màu cam cho chữ */
+        }
+
+        .text-secondary {
+            color: #FF6A00; /* Màu cam cho chữ */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2 class="text-center text-primary">Đăng nhập</h2>
+        <p class="text-center text-secondary">Vui lòng nhập thông tin của bạn</p>
+        <hr />
+
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Địa chỉ email", null, new { @class = "col-form-label" })
+                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Nhập địa chỉ email" })
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group row">
-            @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "col-md-3 col-form-label" })
-            <div class="col-md-9">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+            <div class="form-group">
+                @Html.Label("Mật khẩu", null, new { @class = "col-form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Nhập mật khẩu" })
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-md-9 offset-md-3">
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
             </div>
-        </div>
-    }
-</div>
+        }
 
-<div class="text-center mt-3">
-    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-link" })
-</div>
+        <div class="text-center mt-3">
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "back-link text-primary" })
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+

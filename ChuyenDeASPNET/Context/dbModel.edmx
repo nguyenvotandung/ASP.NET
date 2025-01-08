@@ -17,6 +17,7 @@
           <Property Name="UpdateAt" Type="datetime" />
           <Property Name="UpdateBy" Type="nvarchar" MaxLength="100" />
           <Property Name="IsPopular" Type="bit" />
+          <Property Name="BrandImage" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -136,6 +137,7 @@
           <Property Name="UpdateAt" Type="DateTime" Precision="3" />
           <Property Name="UpdateBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsPopular" Type="Boolean" />
+          <Property Name="BrandImage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -252,6 +254,7 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="ASPNETModel.Brand">
               <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="BrandImage" ColumnName="BrandImage" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

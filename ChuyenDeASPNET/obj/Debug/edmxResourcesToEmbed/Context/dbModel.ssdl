@@ -12,6 +12,7 @@
     <Property Name="UpdateAt" Type="datetime" />
     <Property Name="UpdateBy" Type="nvarchar" MaxLength="100" />
     <Property Name="IsPopular" Type="bit" />
+    <Property Name="BrandImage" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>

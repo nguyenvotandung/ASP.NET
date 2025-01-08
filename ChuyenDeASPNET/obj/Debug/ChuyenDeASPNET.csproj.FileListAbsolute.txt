@@ -130,9 +130,13 @@ C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\roslyn\vbc.rsp
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\roslyn\VBCSCompiler.exe
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\Antlr3.Runtime.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\Newtonsoft.Json.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Helpers.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Mvc.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Optimization.dll
@@ -141,6 +145,10 @@ C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.WebPages.Depl
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.WebPages.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.WebPages.Razor.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\WebGrease.dll
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.xml
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.xml
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.xml
+C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.xml
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Helpers.xml
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Mvc.xml
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\System.Web.Optimization.xml
@@ -156,11 +164,3 @@ C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\obj\Debug\ChuyenDeASPNET.csp
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\obj\Debug\ChuyenDeASPNET.csproj.CopyComplete
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\obj\Debug\ChuyenDeASPNET.dll
 C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\obj\Debug\ChuyenDeASPNET.pdb
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.dll
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.dll
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.xml
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\EntityFramework.SqlServer.xml
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.dll
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.dll
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.xml
-C:\Users\Dung Nguyen\Desktop\ASP.NET\ChuyenDeASPNET\bin\PagedList.Mvc.xml

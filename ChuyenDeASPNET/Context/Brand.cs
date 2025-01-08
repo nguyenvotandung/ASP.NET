@@ -11,7 +11,8 @@ namespace ChuyenDeASPNET.Context
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class Brand
     {
         public int BrandID { get; set; }
@@ -22,5 +23,7 @@ namespace ChuyenDeASPNET.Context
         public Nullable<System.DateTime> UpdateAt { get; set; }
         public string UpdateBy { get; set; }
         public Nullable<bool> IsPopular { get; set; }
+        public string BrandImage { get; set; }
+        public HttpPostedFileBase ImageUpload { get; set; }
     }
 }

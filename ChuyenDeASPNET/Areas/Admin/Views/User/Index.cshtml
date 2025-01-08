@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<ChuyenDeASPNET.Context.Product>
+﻿
+@model PagedList.IPagedList<ChuyenDeASPNET.Context.User>
 
 @using PagedList
 @using PagedList.Mvc
@@ -8,13 +9,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Quản lý sản phẩm</h2>
+<h2>Quản lý thành viên</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <p>
-    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
         <div class="form-inline">
             <div class="form-group">
@@ -26,13 +27,18 @@
 </p>
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model[0].ProductName)</th>
-        <th>@Html.DisplayNameFor(model => model[0].ProductImage)</th>
-        <th>@Html.DisplayNameFor(model => model[0].ShortDescription)</th>
-        <th>@Html.DisplayNameFor(model => model[0].FullDescription)</th>
-        <th>@Html.DisplayNameFor(model => model[0].Price)</th>
-        <th>@Html.DisplayNameFor(model => model[0].BrandID)</th>
-        <th>@Html.DisplayNameFor(model => model[0].CategoryID)</th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Password)
+        </th>
         <th></th>
     </tr>
 
@@ -40,39 +46,26 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.ProductImage))
-                {
-                    <img src="~/Content/images/items/@item.ProductImage" alt="Product Image" style="max-width: 100px;" />
-                }
-                else
-                {
-                    <p>Chưa có hình ảnh</p>
-                }
+                @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrandID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.idUser }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idUser }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.idUser })
             </td>
         </tr>
     }
-</table>
 
+</table>
 <div class="page">Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) trên @Model.PageCount</div>
 <div class="pagination">
     <!-- Nút "Trở về trước"

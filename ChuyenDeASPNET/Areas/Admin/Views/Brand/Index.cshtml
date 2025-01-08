@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<ChuyenDeASPNET.Context.Product>
+﻿@model PagedList.IPagedList<ChuyenDeASPNET.Context.Brand>
 
 @using PagedList
 @using PagedList.Mvc
@@ -8,13 +8,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Quản lý sản phẩm</h2>
+<h2>Quản lý thương hiệu</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <p>
-    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+    @using (Html.BeginForm("Index", "Brand", FormMethod.Get))
     {
         <div class="form-inline">
             <div class="form-group">
@@ -26,13 +26,18 @@
 </p>
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model[0].ProductName)</th>
-        <th>@Html.DisplayNameFor(model => model[0].ProductImage)</th>
-        <th>@Html.DisplayNameFor(model => model[0].ShortDescription)</th>
-        <th>@Html.DisplayNameFor(model => model[0].FullDescription)</th>
-        <th>@Html.DisplayNameFor(model => model[0].Price)</th>
-        <th>@Html.DisplayNameFor(model => model[0].BrandID)</th>
-        <th>@Html.DisplayNameFor(model => model[0].CategoryID)</th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].BrandName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].BrandImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].IsPopular)
+        </th>
         <th></th>
     </tr>
 
@@ -40,12 +45,12 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelItem => item.BrandName)
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.ProductImage))
+                @if (!string.IsNullOrEmpty(item.BrandImage))
                 {
-                    <img src="~/Content/images/items/@item.ProductImage" alt="Product Image" style="max-width: 100px;" />
+                    <img src="~/Content/images/brand/@item.BrandImage" alt="Product Image" style="max-width: 100px;" />
                 }
                 else
                 {
@@ -53,26 +58,20 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.IsPopular)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrandID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.BrandID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BrandID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BrandID })
             </td>
         </tr>
     }
-</table>
 
+</table>
 <div class="page">Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) trên @Model.PageCount</div>
 <div class="pagination">
     <!-- Nút "Trở về trước"

@@ -285,7 +285,7 @@
             </header>
 
             <div class="row row-sm">
-                @foreach (var product in Model.ListProduct.Where(p => p.IsRecommended == true && p.Status == true))
+                @foreach (var product in Model.ListProduct.Where(p => p.IsRecommended == true && p.Status == true).Take(6))
                 {
                     <div class="col-xl-2 col-lg-3 col-md-4 col-6">
                         <div class="card card-sm card-product-grid">

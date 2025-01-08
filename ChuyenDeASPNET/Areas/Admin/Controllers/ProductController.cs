@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace ChuyenDeASPNET.Areas.Admin.Controllers
 {
@@ -13,44 +14,88 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
     {
         // GET: Admin/Product
         ASPNETEntities objASPNETEntities = new ASPNETEntities();
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm, int? page)
         {
-            var lstProduct = objASPNETEntities.Products.ToList();
-            return View(lstProduct);
+            // Get all products as IQueryable
+            var lstProduct = objASPNETEntities.Products.AsQueryable();
+
+            // Search functionality
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                lstProduct = lstProduct.Where(p => p.ProductName.Contains(searchTerm));
+            }
+
+            ViewBag.CurrentFilter = searchTerm;
+
+            // Pagination settings
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+
+            // Ensure you call ToPagedList() on the IQueryable to get IPagedList
+            var pagedList = lstProduct.OrderBy(p => p.ProductName).ToPagedList(pageNumber, pageSize);
+
+            return View(pagedList);  // Return IPagedList<Product> to the view
         }
+        public ActionResult Details(int Id)
+        {
+            var objProduct = objASPNETEntities.Products.Where(n => n.ProductID == Id).FirstOrDefault();
+            return View(objProduct);
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(objASPNETEntities.Categories, "CategoryID", "CategoryName");
-            ViewBag.BrandID = new SelectList(objASPNETEntities.Brands, "BrandID", "BrandName");
+            // Lấy danh sách danh mục và thương hiệu từ cơ sở dữ liệu
+            var categories = objASPNETEntities.Categories.ToList();
+            ViewBag.CategoryId = new SelectList(categories, "CategoryID", "CategoryName");
+
+            var brands = objASPNETEntities.Brands.ToList();
+            ViewBag.BrandId = new SelectList(brands, "BrandID", "BrandName");
+
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product, HttpPostedFileBase ProductImage)
-        {
-            if (ModelState.IsValid)
-            {
-                if (ProductImage != null && ProductImage.ContentLength > 0)
-                {
-                    // Lưu hình ảnh vào thư mục Images (hoặc thư mục bạn muốn)
-                    var fileName = Path.GetFileName(ProductImage.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/images/items/"), fileName);
-                    ProductImage.SaveAs(path);
 
-                    // Lưu tên file hình ảnh vào thuộc tính ProductImage
-                    product.ProductImage = fileName;
+        [HttpPost]
+        public ActionResult Create(Product objProduct)
+        {
+            try
+            {
+                if (objProduct.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(objProduct.ImageUpload.FileName);
+                    string extension = Path.GetExtension(objProduct.ImageUpload.FileName);
+                    fileName = fileName + extension;
+                    objProduct.ProductImage = fileName;
+                    objProduct.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/items/"), fileName));
                 }
 
-                objASPNETEntities.Products.Add(product);
+                objASPNETEntities.Products.Add(objProduct);
                 objASPNETEntities.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
-            ViewBag.CategoryID = new SelectList(objASPNETEntities.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            ViewBag.BrandID = new SelectList(objASPNETEntities.Brands, "BrandID", "BrandName", product.BrandID);
+        [HttpGet]
+        public ActionResult Delete(int Id)
+        {
+            var objProduct = objASPNETEntities.Products.Where(n => n.ProductID == Id).FirstOrDefault();
+            return View(objProduct);
+        }
 
-            return View(product);
+        [HttpPost]
+        public ActionResult Delete(Product objPro)
+        {
+            var objProduct = objASPNETEntities.Products.Where(n => n.ProductID == objPro.ProductID).FirstOrDefault();
+
+            objASPNETEntities.Products.Remove(objProduct);
+            objASPNETEntities.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Product
@@ -62,76 +107,73 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
             var product = objASPNETEntities.Products.Find(id);
             if (product == null) return HttpNotFound();
 
-            ViewBag.CategoryID = new SelectList(objASPNETEntities.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            ViewBag.BrandID = new SelectList(objASPNETEntities.Brands, "BrandID", "BrandName", product.BrandID);
+            // Truyền danh sách Category và Brand vào ViewBag
+            ViewBag.CategoryId = new SelectList(objASPNETEntities.Categories, "Id", "Name", product.CategoryID);
+            ViewBag.BrandId = new SelectList(objASPNETEntities.Brands, "Id", "Name", product.BrandID);
+
             return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product, HttpPostedFileBase ProductImage)
+        public ActionResult Edit(Product objProduct)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (ProductImage != null && ProductImage.ContentLength > 0)
+                var existingProduct = objASPNETEntities.Products.Find(objProduct.ProductID);
+                if (existingProduct == null)
                 {
-                    // Lưu hình ảnh vào thư mục Images (hoặc thư mục bạn muốn)
-                    var fileName = Path.GetFileName(ProductImage.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/images/items/"), fileName);
-
-                    // Kiểm tra nếu thư mục không tồn tại, tạo mới thư mục
-                    var directory = Path.GetDirectoryName(path);
-                    if (!Directory.Exists(directory))
-                    {
-                        Directory.CreateDirectory(directory);
-                    }
-
-                    // Lưu tệp hình ảnh
-                    ProductImage.SaveAs(path);
-
-                    // Lưu tên file hình ảnh vào thuộc tính ProductImage
-                    product.ProductImage = fileName;
+                    return HttpNotFound();
                 }
 
-                objASPNETEntities.Entry(product).State = EntityState.Modified;
+                // Kiểm tra và xử lý tệp tải lên
+                if (objProduct.ImageUpload != null && objProduct.ImageUpload.ContentLength > 0)
+                {
+                    // Xử lý ảnh
+                    string fileName = Path.GetFileNameWithoutExtension(objProduct.ImageUpload.FileName);
+                    string extension = Path.GetExtension(objProduct.ImageUpload.FileName);
+                    fileName = fileName + extension; // Thêm timestamp để tránh trùng tên
+                    string filePath = Path.Combine(Server.MapPath("~/Content/images/items/"), fileName);
+
+                    objProduct.ImageUpload.SaveAs(filePath);
+
+                    // Xóa ảnh cũ nếu có
+                    if (!string.IsNullOrEmpty(existingProduct.ProductImage))
+                    {
+                        string oldFilePath = Path.Combine(Server.MapPath("~/Content/images/items/"), existingProduct.ProductImage);
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    // Cập nhật đường dẫn ảnh mới
+                    existingProduct.ProductImage = fileName;
+                }
+
+                // Cập nhật các trường khác
+                existingProduct.ProductName = objProduct.ProductName;
+                existingProduct.ShortDescription = objProduct.ShortDescription;
+                existingProduct.FullDescription = objProduct.FullDescription;
+                existingProduct.Price = objProduct.Price;
+                existingProduct.CategoryID = objProduct.CategoryID;
+                existingProduct.BrandID = objProduct.BrandID;
+
+                // Đánh dấu thực thể là đã chỉnh sửa
+                objASPNETEntities.Entry(existingProduct).State = EntityState.Modified;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
                 objASPNETEntities.SaveChanges();
+
+                TempData["SuccessMessage"] = "Cập nhật sản phẩm thành công!";
                 return RedirectToAction("Index");
             }
-
-            return View(product);
-        }
-        // GET: Admin/Product/Delete/5
-        [HttpGet]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null) return HttpNotFound();
-
-            var product = objASPNETEntities.Products.Find(id);
-            if (product == null) return HttpNotFound();
-
-            return View(product);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult ConfirmDelete(int id)
-        {
-            var product = objASPNETEntities.Products.Find(id);
-            if (product == null) return HttpNotFound();
-
-            objASPNETEntities.Products.Remove(product);
-            objASPNETEntities.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        // GET: Admin/Product/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null) return HttpNotFound();
-
-            var product = objASPNETEntities.Products.Find(id);
-            if (product == null) return HttpNotFound();
-
-            return View(product);
+            catch (Exception ex)
+            {
+                // Log lỗi nếu cần thiết (sử dụng thư viện log như NLog hoặc Serilog)
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi trong quá trình cập nhật sản phẩm. Vui lòng thử lại.";
+                return RedirectToAction("Edit", new { id = objProduct.ProductID });
+            }
         }
     }
 }

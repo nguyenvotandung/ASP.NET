@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Brands">
       <EntityTypeMapping TypeName="ASPNETModel.Brand">
         <MappingFragment StoreEntitySet="Brand">
+          <ScalarProperty Name="BrandImage" ColumnName="BrandImage" />
           <ScalarProperty Name="BrandID" ColumnName="BrandID" />
           <ScalarProperty Name="BrandName" ColumnName="BrandName" />
           <ScalarProperty Name="Description" ColumnName="Description" />

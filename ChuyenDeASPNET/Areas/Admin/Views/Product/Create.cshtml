@@ -71,10 +71,9 @@
 
         <!-- Product Image -->
         <div class="form-group">
-            @Html.LabelFor(model => model.ProductImage, "Product Image", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="ProductImage" class="form-control" />
-                @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
+                <input type="file" name="ImageUpload" />
             </div>
         </div>
 
