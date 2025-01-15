@@ -87,6 +87,7 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ProductID)
 
                 <div class="form-actions text-center mt-4">
                     <button type="submit" class="btn btn-danger btn-lg">Delete</button>

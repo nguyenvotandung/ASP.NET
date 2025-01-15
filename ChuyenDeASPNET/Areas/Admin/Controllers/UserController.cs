@@ -6,13 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using ChuyenDeASPNET.Areas.Admin.Filter;
 
 namespace ChuyenDeASPNET.Areas.Admin.Controllers
 {
+    [AdminAuthorize] // Gắn bộ lọc vào toàn bộ controller
     public class UserController : Controller
     {
         // GET: Admin/User
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index(string searchTerm, int? page)
         {
             // Get all products as IQueryable

@@ -221,7 +221,7 @@
                             <aside class="col-sm-3">
                                 <div class="info-aside">
                                     <div class="price-wrap">
-                                        <span class="h5 price">@item.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</span>
+                                        <span class="h5 price">@string.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span>
                                         <small class="text-muted">/mỗi sản phẩm</small>
                                     </div> <!-- price-wrap.// -->
                                     <small class="text-warning">Phí vận chuyển đã thanh toán</small>

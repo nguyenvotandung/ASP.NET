@@ -9,12 +9,14 @@ using System.Web.UI;
 using PagedList;
 using System.IO;
 using System.Data.Entity;
+using ChuyenDeASPNET.Areas.Admin.Filter;
 
 namespace ChuyenDeASPNET.Areas.Admin.Controllers
 {
+    [AdminAuthorize] // Gắn bộ lọc vào toàn bộ controller
     public class CategoryController : Controller
     {
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index(string searchTerm, int? page)
         {
             var lstCategory = objASPNETEntities.Categories.AsQueryable();
@@ -77,7 +79,7 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
                     string extension = Path.GetExtension(objCategory.ImageUpload.FileName);
                     fileName = fileName + extension;
                     objCategory.CategoryImage = fileName;
-                    objCategory.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/category/"), fileName));
+                    objCategory.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/items/"), fileName));
                 }
 
                 objASPNETEntities.Categories.Add(objCategory);
@@ -121,14 +123,14 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(objCategory.ImageUpload.FileName);
                     string extension = Path.GetExtension(objCategory.ImageUpload.FileName);
                     fileName = fileName + extension; // Thêm timestamp để tránh trùng tên
-                    string filePath = Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/images/items/"), fileName);
 
                     objCategory.ImageUpload.SaveAs(filePath);
 
                     // Xóa ảnh cũ nếu có
                     if (!string.IsNullOrEmpty(existingCategory.CategoryImage))
                     {
-                        string oldFilePath = Path.Combine(Server.MapPath("~/Content/images/category/"), existingCategory.CategoryImage);
+                        string oldFilePath = Path.Combine(Server.MapPath("~/Content/images/items/"), existingCategory.CategoryImage);
                         if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);

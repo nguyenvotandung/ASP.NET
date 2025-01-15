@@ -11,7 +11,7 @@ namespace ChuyenDeASPNET.Controllers
     public class PaymentController : Controller
     {
         // GET: Payment
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index()
         {
             if (Session["idUser"] == null)

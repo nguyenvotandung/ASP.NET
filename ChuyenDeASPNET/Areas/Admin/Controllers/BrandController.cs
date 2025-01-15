@@ -12,7 +12,7 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
 {
     public class BrandController : Controller
     {
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index(string searchTerm, int? page)
         {
             // Get all products as IQueryable
@@ -76,7 +76,7 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
                     string extension = Path.GetExtension(objBrand.ImageUpload.FileName);
                     fileName = fileName + extension;
                     objBrand.BrandImage = fileName;
-                    objBrand.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/brand/"), fileName));
+                    objBrand.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/items/"), fileName));
                 }
 
                 objASPNETEntities.Brands.Add(objBrand);
@@ -121,14 +121,14 @@ namespace ChuyenDeASPNET.Areas.Admin.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(objBrand.ImageUpload.FileName);
                     string extension = Path.GetExtension(objBrand.ImageUpload.FileName);
                     fileName = fileName + extension; // Thêm timestamp để tránh trùng tên
-                    string filePath = Path.Combine(Server.MapPath("~/Content/images/brand/"), fileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/images/items/"), fileName);
 
                     objBrand.ImageUpload.SaveAs(filePath);
 
                     // Xóa ảnh cũ nếu có
                     if (!string.IsNullOrEmpty(existingBrand.BrandImage))
                     {
-                        string oldFilePath = Path.Combine(Server.MapPath("~/Content/images/brand/"), existingBrand.BrandImage);
+                        string oldFilePath = Path.Combine(Server.MapPath("~/Content/images/items/"), existingBrand.BrandImage);
                         if (System.IO.File.Exists(oldFilePath))
                         {
                             System.IO.File.Delete(oldFilePath);

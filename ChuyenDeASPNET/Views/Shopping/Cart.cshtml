@@ -64,7 +64,7 @@
                                         </td>
                                         <td>
                                             <div class="price-wrap">
-                                                <var class="price">@item.Product.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</var>
+                                                <var class="price">@string.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Product.Price)</var>
                                             </div> <!-- price-wrap .// -->
                                         </td>
 

@@ -1,4 +1,5 @@
-﻿using ChuyenDeASPNET.Context;
+﻿using ChuyenDeASPNET.Areas.Admin.Filter;
+using ChuyenDeASPNET.Context;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,11 @@ using System.Web.Mvc;
 
 namespace ChuyenDeASPNET.Areas.Admin.Controllers
 {
+    [AdminAuthorize] // Gắn bộ lọc vào toàn bộ controller
     public class OrderController :Controller
     {
         // GET: Admin/Product
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index(string searchTerm, int? page)
         {
             // Get all products as IQueryable

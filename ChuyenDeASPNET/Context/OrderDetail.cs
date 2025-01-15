@@ -21,5 +21,6 @@ namespace ChuyenDeASPNET.Context
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
+        public System.Web.HttpPostedFileBase ImageUpload { get; set; }
     }
 }

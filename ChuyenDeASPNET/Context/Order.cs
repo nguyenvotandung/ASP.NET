@@ -28,5 +28,6 @@ namespace ChuyenDeASPNET.Context
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public System.Web.HttpPostedFileBase ImageUpload { get; set; }
     }
 }

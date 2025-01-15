@@ -12,7 +12,7 @@ namespace ChuyenDeASPNET.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index()
         {
 

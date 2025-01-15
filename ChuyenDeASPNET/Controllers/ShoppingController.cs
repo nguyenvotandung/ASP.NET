@@ -11,7 +11,7 @@ namespace ChuyenDeASPNET.Controllers
     public class ShoppingController : Controller
     {
         // GET: Shopping
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Cart()
         {
             return View((List<CartModel>)Session["cart"]);

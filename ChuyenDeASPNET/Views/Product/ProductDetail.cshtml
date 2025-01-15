@@ -83,7 +83,7 @@
                         <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 đơn hàng </small>
                     </div> <!-- rating-wrap.// -->
                     <div class="mb-3">
-                        <var class="price">@Model.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</var>
+                        <var class="price">@string.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.Price)</var>
                     </div> <!-- price-detail-wrap .// -->
                     <p>
                         @Model.ShortDescription

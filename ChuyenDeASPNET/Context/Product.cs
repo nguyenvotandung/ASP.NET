@@ -11,8 +11,7 @@ namespace ChuyenDeASPNET.Context
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-
+    
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,7 +25,7 @@ namespace ChuyenDeASPNET.Context
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         public string ProductImage { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public int CategoryID { get; set; }
         public int BrandID { get; set; }
         public Nullable<System.DateTime> CreateAt { get; set; }
@@ -39,6 +38,6 @@ namespace ChuyenDeASPNET.Context
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public HttpPostedFileBase ImageUpload { get; set; }
+        public System.Web.HttpPostedFileBase ImageUpload { get; set; }
     }
 }

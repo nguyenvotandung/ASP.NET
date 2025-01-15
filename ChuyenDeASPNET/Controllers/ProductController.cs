@@ -11,7 +11,7 @@ namespace ChuyenDeASPNET.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        ASPNETEntities objASPNETEntities = new ASPNETEntities();
+        ASPNETEntities2 objASPNETEntities = new ASPNETEntities2();
         public ActionResult Index()
         {
             return View();

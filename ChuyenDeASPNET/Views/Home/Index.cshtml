@@ -298,8 +298,8 @@
                                     @product.ProductName
                                 </a>
                                 <div class="price mt-1">
-                                    @product.Price.ToString("C0", System.Globalization.CultureInfo.CreateSpecificCulture("vi-VN"))
-                                </div> <!-- price-wrap.// -->
+                                    @string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", product.Price)
+                                </div>
                             </figcaption>
                         </div>
                     </div> <!-- col.// -->

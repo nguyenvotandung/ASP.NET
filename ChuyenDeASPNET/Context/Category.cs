@@ -11,8 +11,7 @@ namespace ChuyenDeASPNET.Context
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-
+    
     public partial class Category
     {
         public int CategoryID { get; set; }
@@ -23,6 +22,6 @@ namespace ChuyenDeASPNET.Context
         public Nullable<System.DateTime> UpdateAt { get; set; }
         public string UpdateBy { get; set; }
         public string CategoryImage { get; set; }
-        public HttpPostedFileBase ImageUpload { get; set; }
+        public System.Web.HttpPostedFileBase ImageUpload { get; set; }
     }
 }
